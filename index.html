@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>溶瘤病毒 RNA 基因线路文献地图</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f2;
+      --band: #eef2e6;
+      --panel: #ffffff;
+      --ink: #15201b;
+      --muted: #536058;
+      --line: #d7dccf;
+      --line-strong: #c2cbbd;
+      --green: #255237;
+      --green-2: #537f64;
+      --soft: #e3efe4;
+      --amber: #8a5a1f;
+      --amber-soft: #f3eadb;
+      --blue: #264f6d;
+      --blue-soft: #e2edf1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      background: var(--band);
+      border-bottom: 1px solid var(--line);
+      padding: 30px 24px 24px;
+    }
+
+    .wrap {
+      margin: 0 auto;
+      max-width: 1180px;
+    }
+
+    .top {
+      align-items: end;
+      display: grid;
+      gap: 22px;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    }
+
+    .eyebrow {
+      color: #5b6f55;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.12;
+      margin: 10px 0 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      line-height: 1.78;
+      margin: 0;
+      max-width: 780px;
+    }
+
+    .metrics {
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 14px;
+    }
+
+    .metric:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .metric small {
+      color: #6a766c;
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.35;
+      margin-top: 5px;
+    }
+
+    .filters {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+      margin-top: 24px;
+      padding: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+    }
+
+    label span,
+    dt,
+    h3,
+    .section-label {
+      color: #69746a;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    input,
+    select {
+      background: #fbfcf8;
+      border: 1px solid #cbd3c4;
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 15px;
+      min-height: 42px;
+      outline: none;
+      padding: 8px 10px;
+      width: 100%;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--green-2);
+      box-shadow: 0 0 0 3px rgba(83, 127, 100, .16);
+    }
+
+    main {
+      padding: 22px 24px 40px;
+    }
+
+    .summary {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1.1fr .9fr;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(30, 40, 34, .04);
+      padding: 16px;
+    }
+
+    .panel h2 {
+      font-size: 20px;
+      margin: 4px 0 10px;
+    }
+
+    .panel p,
+    .panel li {
+      color: #3f4b43;
+      line-height: 1.72;
+    }
+
+    .panel ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .motif-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .motif {
+      background: #fbfcf8;
+      border: 1px solid #e0e5da;
+      border-radius: 7px;
+      padding: 11px;
+    }
+
+    .motif strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .note {
+      align-items: center;
+      color: var(--muted);
+      display: flex;
+      font-size: 14px;
+      gap: 14px;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    button {
+      background: #fff;
+      border: 1px solid #315c3d;
+      border-radius: 6px;
+      color: #21472e;
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 34px;
+      padding: 6px 12px;
+      white-space: nowrap;
+    }
+
+    button:hover,
+    .links a:hover {
+      background: #edf4eb;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+
+    article {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(30, 40, 34, .05);
+      padding: 18px;
+    }
+
+    .article-head {
+      align-items: flex-start;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      align-items: center;
+      background: var(--soft);
+      border: 1px solid #c7dcc9;
+      border-radius: 999px;
+      color: var(--green);
+      display: inline-flex;
+      font-size: 13px;
+      font-weight: 800;
+      min-height: 26px;
+      padding: 3px 9px;
+    }
+
+    .chip.muted {
+      background: #f0f2ea;
+      border-color: #dde2d4;
+      color: #59655b;
+    }
+
+    .chip.amber {
+      background: var(--amber-soft);
+      border-color: #dfcaa8;
+      color: var(--amber);
+    }
+
+    .chip.blue {
+      background: var(--blue-soft);
+      border-color: #c1d5df;
+      color: var(--blue);
+    }
+
+    article h2 {
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height: 1.35;
+      margin: 12px 0 0;
+    }
+
+    .title-zh {
+      color: #405047;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.55;
+      margin: 7px 0 0;
+    }
+
+    .links {
+      display: flex;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .links a {
+      border: 1px solid #315c3d;
+      border-radius: 6px;
+      color: #21472e;
+      font-weight: 800;
+      min-height: 34px;
+      padding: 6px 12px;
+      text-decoration: none;
+    }
+
+    dl {
+      border-top: 1px solid #e1e5dc;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: .9fr 1fr 1.1fr;
+      margin: 16px 0 0;
+      padding-top: 14px;
+    }
+
+    dd {
+      color: #253028;
+      line-height: 1.55;
+      margin: 5px 0 0;
+      overflow-wrap: anywhere;
+    }
+
+    .body {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr);
+      margin-top: 16px;
+    }
+
+    .body p {
+      color: #3f4b43;
+      line-height: 1.78;
+      margin: 6px 0 0;
+    }
+
+    .empty {
+      border: 1px dashed #bfc8b8;
+      border-radius: 8px;
+      color: #59655c;
+      padding: 32px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .top,
+      .filters,
+      .summary,
+      dl,
+      .body {
+        grid-template-columns: 1fr;
+      }
+
+      .article-head,
+      .note {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header,
+      main {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .motif-grid,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .metric:last-child {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <div>
+          <div class="eyebrow">CNS literature tracker</div>
+          <h1>溶瘤病毒 RNA 基因线路文献地图</h1>
+          <p class="intro">聚焦 2024 年以来 Cell、Nature、Science 正刊及其系列子刊中，与溶瘤病毒、RNA 调控、miRNA 靶序列、dsRNA 传感、IRES/saRNA、合成线路和可控递送相关的研究。页面按“核心、强相关、启发”标注证据等级，避免把邻近 RNA 疗法误读为完整溶瘤病毒线路。</p>
+        </div>
+        <div class="metrics">
+          <div class="metric"><small>收录记录</small><strong id="total">0</strong></div>
+          <div class="metric"><small>当前显示</small><strong id="shown">0</strong></div>
+          <div class="metric"><small>检索日期</small><strong>2026-07-15</strong></div>
+        </div>
+      </div>
+      <div class="filters">
+        <label><span>检索</span><input id="query" placeholder="题名、DOI、线路模块、关键词" /></label>
+        <label><span>证据等级</span><select id="tier"></select></label>
+        <label><span>期刊</span><select id="journal"></select></label>
+        <label><span>年份</span><select id="year"></select></label>
+        <label><span>线路模块</span><select id="motif"></select></label>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="summary">
+        <div class="panel">
+          <div class="section-label">Scope</div>
+          <h2>纳入边界</h2>
+          <p>严格核心项要求论文明确使用溶瘤病毒，并包含 RNA 层面的选择性、传感、表达或递送控制。强相关项包括 RNA 疗法、病毒载体递送和免疫线路研究，可为溶瘤病毒 RNA 基因线路设计提供模块。启发项保留 CNS 系列中的递送、微生物协同或综述性证据。</p>
+        </div>
+        <div class="panel">
+          <div class="section-label">Design motifs</div>
+          <div class="motif-grid">
+            <div class="motif"><strong>miRNA 靶序列安全锁</strong><span>在正常脑/正常组织中削弱复制，肿瘤内释放毒性。</span></div>
+            <div class="motif"><strong>IRES / circRNA 翻译开关</strong><span>用肿瘤依赖的翻译环境驱动选择性表达。</span></div>
+            <div class="motif"><strong>dsRNA / RIG-I 放大环</strong><span>把病毒复制、应激和干扰素信号耦合成免疫放大。</span></div>
+            <div class="motif"><strong>跨底盘控制</strong><span>细菌、病毒、mRNA 和 CAR-T 可组合成多节点线路。</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="note">
+        <div>数据源：PubMed E-utilities、DOI 原文链接。检索范围为 2024-01-01 至 2026-07-15；默认按发表时间最新在前。</div>
+        <button id="reset">清除筛选</button>
+      </div>
+
+      <section class="list" id="list"></section>
+    </div>
+  </main>
+
+  <script>
+    const papers = [
+      {
+        pmid: "41345806",
+        year: 2025,
+        published: "2025 Dec",
+        journal: "Nature Cancer",
+        tier: "核心",
+        motif: "miRNA 安全锁 / 病毒重定向 / 免疫 payload",
+        title: "Retargeted oncolytic viruses engineered to remodel the tumor microenvironment for glioblastoma immunotherapy.",
+        titleZh: "重定向工程化溶瘤病毒重塑胶质母细胞瘤微环境以增强免疫治疗",
+        doi: "10.1038/s43018-025-01070-6",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/41345806/",
+        doiUrl: "https://doi.org/10.1038/s43018-025-01070-6",
+        matchedTerms: ["oncolytic virus", "microRNA target cassettes", "HSV-1", "IL-12", "anti-PD1"],
+        standard: "最贴近“溶瘤病毒 RNA 基因线路”的核心论文。作者在 HSV-1 平台中加入 microRNA 靶序列以限制健康脑细胞复制，同时通过 gD 重定向和多免疫 payload 构建多层选择性。",
+        summaryZh: "该研究把毒力调节、正常细胞 miRNA 约束、肿瘤靶向进入和局部免疫调控整合到一个 GBM 溶瘤病毒平台。对 RNA 线路设计最有用的部分是 miRNA 靶盒安全锁：它提供“正常细胞中关闭、肿瘤中开启”的复制控制框架。"
+      },
+      {
+        pmid: "40817284",
+        year: 2026,
+        published: "2026 Mar",
+        journal: "Nature Biomedical Engineering",
+        tier: "核心",
+        motif: "RNA 基因组递送 / 跨底盘控制",
+        title: "Engineered bacteria launch and control an oncolytic virus.",
+        titleZh: "工程化细菌启动并控制溶瘤病毒",
+        doi: "10.1038/s41551-025-01476-8",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/40817284/",
+        doiUrl: "https://doi.org/10.1038/s41551-025-01476-8",
+        matchedTerms: ["Senecavirus A RNA genome", "bacteria", "protease control", "CAPPSID"],
+        standard: "明确由细菌转录并递送 RNA 病毒基因组，且把病毒成熟依赖于细菌递送的蛋白酶，是跨底盘可控溶瘤病毒线路的代表。",
+        summaryZh: "研究设计了 CAPPSID 平台：沙门氏菌在宿主细胞内递送 Senecavirus A 的 RNA 基因组以启动溶瘤感染，并通过细菌提供的蛋白酶控制病毒成熟。它不是单纯病毒改造，而是“细菌感知/递送 + RNA 病毒复制 + 病毒成熟控制”的协作线路。"
+      },
+      {
+        pmid: "38693119",
+        year: 2024,
+        published: "2024 Apr 30",
+        journal: "Nature Communications",
+        tier: "强相关",
+        motif: "Z-RNA / ZBP1 / PANoptosis",
+        title: "Fn-OMV potentiates ZBP1-mediated PANoptosis triggered by oncolytic HSV-1 to fuel antitumor immunity.",
+        titleZh: "Fn-OMV 增强溶瘤 HSV-1 触发的 ZBP1 介导 PANoptosis 并推动抗肿瘤免疫",
+        doi: "10.1038/s41467-024-48032-7",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/38693119/",
+        doiUrl: "https://doi.org/10.1038/s41467-024-48032-7",
+        matchedTerms: ["oHSV", "Z-RNA", "ZBP1", "PANoptosis", "Fn-OMV"],
+        standard: "论文没有直接设计 RNA 基因线路，但揭示 oHSV 诱导内源 Z-RNA 积累并激活 ZBP1，可作为 RNA 传感免疫模块。",
+        summaryZh: "oHSV 可提升干扰素刺激基因表达，促进内源 Z-RNA 积累并激活 ZBP1 介导的炎性细胞死亡。Fn-OMV 进一步放大 PANoptosis 执行蛋白，提示溶瘤病毒可以与 RNA 构象传感模块共同塑造免疫杀伤。"
+      },
+      {
+        pmid: "39910037",
+        year: 2025,
+        published: "2025 Feb 05",
+        journal: "Nature Communications",
+        tier: "核心",
+        motif: "IRES 双 payload / 临床转化",
+        title: "The oncolytic adenovirus TILT-123 with pembrolizumab in platinum resistant or refractory ovarian cancer: the phase 1a PROTA trial.",
+        titleZh: "溶瘤腺病毒 TILT-123 联合帕博利珠单抗治疗铂耐药或难治卵巢癌的 1a 期 PROTA 试验",
+        doi: "10.1038/s41467-025-56482-w",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/39910037/",
+        doiUrl: "https://doi.org/10.1038/s41467-025-56482-w",
+        matchedTerms: ["TILT-123", "Ad5/3-E2F-D24", "TNFα", "IRES", "IL-2"],
+        standard: "临床期溶瘤腺病毒，构型中包含 E2F/D24 肿瘤选择性与 TNFα-IRES-IL-2 表达盒，是可转化线路的临床证据。",
+        summaryZh: "TILT-123 是编码 TNFα 和 IL-2 的嵌合溶瘤腺病毒，使用 IRES 串联表达免疫 payload。1a 期结果显示联合 pembrolizumab 可耐受，并观察到疾病控制信号。它适合作为“线路复杂度能否进临床”的参照。"
+      },
+      {
+        pmid: "40628717",
+        year: 2025,
+        published: "2025 Jul 08",
+        journal: "Nature Communications",
+        tier: "强相关",
+        motif: "dsRNA 传感 / RIG-I / 正反馈",
+        title: "The PARP inhibitor talazoparib synergizes with reovirus to induce cancer killing and tumour control in vivo in mouse models.",
+        titleZh: "PARP 抑制剂 talazoparib 与呼肠孤病毒协同诱导肿瘤杀伤和体内肿瘤控制",
+        doi: "10.1038/s41467-025-61297-w",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/40628717/",
+        doiUrl: "https://doi.org/10.1038/s41467-025-61297-w",
+        matchedTerms: ["reovirus", "double-stranded RNA", "RIG-I", "PARP-1", "positive feedback"],
+        standard: "溶瘤双链 RNA 病毒与 RIG-I/PARP 轴形成免疫放大，可转化为 dsRNA 传感型线路设计思路。",
+        summaryZh: "RT3D 呼肠孤病毒与 talazoparib 联用可增强外源性凋亡、NF-kB、IFN-β 和 TNF/TRAIL 信号。作者还显示非病毒 dsRNA 或 RIG-I 激动可模拟部分效应，说明 dsRNA 传感本身可以成为线路放大节点。"
+      },
+      {
+        pmid: "40413207",
+        year: 2025,
+        published: "2025 May 25",
+        journal: "Nature Communications",
+        tier: "强相关",
+        motif: "dsRNA 传感 / ER stress / 免疫逃逸调制",
+        title: "Palbociclib and dsRNA sensor co-operate to enhance anti-cancer effects through ER stress and modulation of immune evasion.",
+        titleZh: "Palbociclib 与 dsRNA 传感协同，通过 ER 应激和免疫逃逸调制增强抗癌效应",
+        doi: "10.1038/s41467-025-60133-5",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/40413207/",
+        doiUrl: "https://doi.org/10.1038/s41467-025-60133-5",
+        matchedTerms: ["RIG-I", "MDA5", "reovirus", "interferon", "ERV"],
+        standard: "以 oncolytic reovirus 与 dsRNA 传感为中心，说明药物可把 RNA 识别、ER 应激和抗原呈递连成治疗线路。",
+        summaryZh: "研究发现 Rt3D-palbociclib 组合增强应激响应、干扰素产生、HLA 表达和内源逆转录病毒元件相关抗原呈递。对线路设计的启示是，病毒 RNA 传感可以和细胞周期/表观遗传调节器耦合，提升肿瘤免疫可见性。"
+      },
+      {
+        pmid: "40411783",
+        year: 2025,
+        published: "2025 Jun 24",
+        journal: "Cell Reports",
+        tier: "强相关",
+        motif: "mRNA prime / OV boost / 单细胞免疫线路",
+        title: "Heterologous prime-boost with an mRNA vaccine and an oncolytic virus enhances tumor regression through overcoming intratumoral immune suppression.",
+        titleZh: "mRNA 疫苗与溶瘤病毒异源 prime-boost 通过克服肿瘤内免疫抑制增强肿瘤消退",
+        doi: "10.1016/j.celrep.2025.115745",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/40411783/",
+        doiUrl: "https://doi.org/10.1016/j.celrep.2025.115745",
+        matchedTerms: ["mRNA vaccine", "oncolytic HSV-1", "single-cell RNA-seq", "prime-boost"],
+        standard: "不是单病毒内部线路，而是 mRNA 与 OV 的组合免疫线路；scRNA-seq 解析了外周启动与肿瘤内重塑的互补机制。",
+        summaryZh: "mRNA 疫苗更擅长激活外周抗原特异 T 细胞，HSV-1 溶瘤病毒更擅长改变肿瘤内免疫环境。先 mRNA prime、后 OV boost 的策略把系统免疫和局部病毒炎症串联起来，是组合式 RNA-病毒线路的重要范式。"
+      },
+      {
+        pmid: "42247513",
+        year: 2026,
+        published: "2026 Jun 05",
+        journal: "Science Advances",
+        tier: "强相关",
+        motif: "OV-CAR-T / TCR 触发 / scRNA-seq",
+        title: "Engagement of the TCR against an oncolytic virus generates a population of effector CAR T cells with potent antitumor activity.",
+        titleZh: "针对溶瘤病毒的 TCR 参与产生具有强抗肿瘤活性的效应 CAR-T 细胞群",
+        doi: "10.1126/sciadv.aef5331",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/42247513/",
+        doiUrl: "https://doi.org/10.1126/sciadv.aef5331",
+        matchedTerms: ["VSV", "CAR-T", "TCR", "single-cell RNA-seq"],
+        standard: "以 VSV 溶瘤病毒作为 CAR-T 内源 TCR 激活模块，属于细胞治疗与 OV 的免疫线路协同。",
+        summaryZh: "VSV 与 CAR-T 联用产生一群抗病毒 TCR primed CAR-T 细胞，表现出更强效应功能和不同转录状态。该结果提示 OV 不只是杀瘤底盘，也可作为免疫细胞状态编程输入。"
+      },
+      {
+        pmid: "37845485",
+        year: 2024,
+        published: "2024 Jan",
+        journal: "Nature Cancer",
+        tier: "启发",
+        motif: "circRNA / IRES 肿瘤选择性翻译",
+        title: "An in vitro-transcribed circular RNA targets the mitochondrial inner membrane cardiolipin to ablate EIF4G2+/PTBP1+ pan-adenocarcinoma.",
+        titleZh: "体外转录环状 RNA 靶向线粒体内膜心磷脂以清除 EIF4G2+/PTBP1+ 泛腺癌",
+        doi: "10.1038/s43018-023-00650-8",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/37845485/",
+        doiUrl: "https://doi.org/10.1038/s43018-023-00650-8",
+        matchedTerms: ["circRNA", "HRV2 IRES", "EIF4G2", "PTBP1", "LNP"],
+        standard: "不是溶瘤病毒，但使用病毒 IRES 和 circRNA 构建肿瘤选择性翻译毒性模块，是 RNA 基因线路设计的关键参考。",
+        summaryZh: "作者构建 HRV2 IRES 驱动的 GSDMD 变体 circRNA，并通过 LNP 递送，使高 EIF4G2/PTBP1 的肿瘤细胞选择性翻译毒性蛋白。它提供了“病毒 RNA 元件 + 肿瘤翻译环境”的非复制型 oncolytic RNA 模块。"
+      },
+      {
+        pmid: "38177457",
+        year: 2024,
+        published: "2024 Jan",
+        journal: "Nature Cancer",
+        tier: "启发",
+        motif: "circRNA 疗法解读",
+        title: "An oncolytic circular RNA therapy.",
+        titleZh: "一种溶瘤环状 RNA 疗法",
+        doi: "10.1038/s43018-023-00627-7",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/38177457/",
+        doiUrl: "https://doi.org/10.1038/s43018-023-00627-7",
+        matchedTerms: ["oncolytic circular RNA", "Nature Cancer"],
+        standard: "Nature Cancer 同期解读/评论性记录，可作为 circRNA oncolytic 方向的入口，但不是完整实验论文。",
+        summaryZh: "该记录本身无 PubMed 摘要，适合作为上方 circRNA 研究的概念索引。网站保留它，是为了提醒读者 CNS 子刊已经把“oncolytic RNA”作为独立治疗概念讨论。"
+      },
+      {
+        pmid: "41593087",
+        year: 2026,
+        published: "2026 Jan 27",
+        journal: "Nature Communications",
+        tier: "启发",
+        motif: "VPg saRNA / 低免疫原性 / 治疗蛋白编码",
+        title: "Engineered VPg saRNA achieves cap-independent, low-immunogenic and precise encoding of therapeutic proteins in vivo.",
+        titleZh: "工程化 VPg 自扩增 RNA 在体内实现非帽依赖、低免疫原性和精确治疗蛋白编码",
+        doi: "10.1038/s41467-026-68364-w",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/41593087/",
+        doiUrl: "https://doi.org/10.1038/s41467-026-68364-w",
+        matchedTerms: ["saRNA", "Norovirus replicon", "oncolytic mRNAs", "cap-independent"],
+        standard: "并非溶瘤病毒论文，但摘要明确提到 precise encoding of oncolytic mRNAs，可作为 RNA 复制子 payload 设计参考。",
+        summaryZh: "VPg saRNA 试图解决传统 saRNA 免疫原性高和复制保真度低的问题，并支持复杂治疗蛋白编码。对 OV RNA 线路的启示是：复制型 RNA 载体可以被工程化为更低免疫噪声、更可编程的表达底盘。"
+      },
+      {
+        pmid: "41855345",
+        year: 2026,
+        published: "2026 Mar 19",
+        journal: "Science",
+        tier: "启发",
+        motif: "体内递送 / 肠肝轴 / 病毒载体",
+        title: "Commensal-driven serotonin production modulates in vivo delivery of synthetic and viral vectors.",
+        titleZh: "共生菌驱动的血清素产生调控合成和病毒载体的体内递送",
+        doi: "10.1126/science.adu7686",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/41855345/",
+        doiUrl: "https://doi.org/10.1126/science.adu7686",
+        matchedTerms: ["viral vectors", "oncolytic virotherapy", "mRNA-based therapies", "delivery"],
+        standard: "Science 正刊递送机制论文，显示肠道菌群-血清素-肝清除轴影响病毒载体、mRNA 和溶瘤病毒治疗效率。",
+        summaryZh: "研究指出抑制血清素信号或饮食干预可降低肝脏清除并提升多类体内递送系统效率，包括溶瘤病毒治疗和 mRNA 疗法。它不提供病毒内部线路，但提示递送环境可作为外部可调输入。"
+      },
+      {
+        pmid: "42119557",
+        year: 2026,
+        published: "2026 May 21",
+        journal: "Cell Chemical Biology",
+        tier: "启发",
+        motif: "可编程活体治疗综述",
+        title: "Programmable living therapeutics for cancer immunotherapy.",
+        titleZh: "用于癌症免疫治疗的可编程活体疗法",
+        doi: "10.1016/j.chembiol.2026.04.007",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/42119557/",
+        doiUrl: "https://doi.org/10.1016/j.chembiol.2026.04.007",
+        matchedTerms: ["synthetic biology", "oncolytic viruses", "miRNA target modules", "circuit complexity"],
+        standard: "Cell Press 综述，明确把 OV 的肿瘤选择性启动子、miRNA 模块和重定向配体归入合成线路设计。",
+        summaryZh: "综述将 CAR-T、工程菌和溶瘤病毒并列为可编程活体治疗，强调 OV 可通过肿瘤选择性启动子、miRNA 靶模块、衣壳/配体重定向来限制复制并增强免疫刺激。它适合用作路线图而非单一实验证据。"
+      },
+      {
+        pmid: "40360587",
+        year: 2025,
+        published: "2025 May 13",
+        journal: "Scientific Reports",
+        tier: "启发",
+        motif: "VSV 递送 miRNA / 负结果",
+        title: "Therapeutic limitations of oncolytic VSVd51-mediated miR-199a-5p delivery in triple negative breast cancer models.",
+        titleZh: "溶瘤 VSVd51 介导 miR-199a-5p 递送在三阴性乳腺癌模型中的治疗局限",
+        doi: "10.1038/s41598-025-01584-0",
+        pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/40360587/",
+        doiUrl: "https://doi.org/10.1038/s41598-025-01584-0",
+        matchedTerms: ["VSVd51", "miR-199a-5p", "RNA interference", "TNBC"],
+        standard: "Nature Portfolio 扩展相关记录，给出 OV 携带 miRNA payload 的模型依赖性和失败边界。",
+        summaryZh: "作者将 pri-或 pre-miR-199a-5p 整合进 VSVd51，体外可表达成熟 miRNA 并影响部分 EMT 标志物，但多个体内模型未产生显著获益。它提醒 RNA payload 线路必须严查肿瘤模型、载体和宿主免疫兼容性。"
+      }
+    ];
+
+    const allTier = "全部等级";
+    const allJournal = "全部期刊";
+    const allYear = "全部年份";
+    const allMotif = "全部模块";
+    const state = { tier: allTier, journal: allJournal, year: allYear, motif: allMotif, query: "" };
+    const els = {
+      total: document.getElementById("total"),
+      shown: document.getElementById("shown"),
+      list: document.getElementById("list"),
+      query: document.getElementById("query"),
+      tier: document.getElementById("tier"),
+      journal: document.getElementById("journal"),
+      year: document.getElementById("year"),
+      motif: document.getElementById("motif"),
+      reset: document.getElementById("reset")
+    };
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function unique(values) {
+      return Array.from(new Set(values)).filter(Boolean);
+    }
+
+    function fillSelect(el, values) {
+      el.innerHTML = values.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    }
+
+    function tierClass(tier) {
+      if (tier === "核心") return "";
+      if (tier === "强相关") return "blue";
+      return "amber";
+    }
+
+    function dateValue(item) {
+      const monthMap = {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12
+      };
+      const parts = String(item.published || item.year).split(/\s+/);
+      const year = Number(parts[0]) || Number(item.year) || 0;
+      const month = monthMap[parts[1]] || 12;
+      const day = Number(parts[2]) || 28;
+      return year * 10000 + month * 100 + day;
+    }
+
+    function renderItem(item) {
+      const chips = [
+        `<span class="chip ${tierClass(item.tier)}">${escapeHtml(item.tier)}</span>`,
+        `<span class="chip muted">${escapeHtml(item.year)}</span>`,
+        `<span class="chip muted">${escapeHtml(item.journal)}</span>`,
+        `<span class="chip">${escapeHtml(item.motif)}</span>`
+      ].join("");
+
+      return `<article>
+        <div class="article-head">
+          <div>
+            <div class="chips">${chips}</div>
+            <h2>${escapeHtml(item.title)}</h2>
+            <p class="title-zh">${escapeHtml(item.titleZh)}</p>
+          </div>
+          <div class="links">
+            <a href="${escapeHtml(item.doiUrl)}" target="_blank" rel="noreferrer">DOI</a>
+            <a href="${escapeHtml(item.pubmedUrl)}" target="_blank" rel="noreferrer">PubMed</a>
+          </div>
+        </div>
+        <dl>
+          <div><dt>DOI</dt><dd>${escapeHtml(item.doi)}</dd></div>
+          <div><dt>发表时间</dt><dd>${escapeHtml(item.published)}</dd></div>
+          <div><dt>命中词</dt><dd>${escapeHtml(item.matchedTerms.join(" / "))}</dd></div>
+        </dl>
+        <div class="body">
+          <section><h3>纳入理由</h3><p>${escapeHtml(item.standard)}</p></section>
+          <section><h3>设计启示</h3><p>${escapeHtml(item.summaryZh)}</p></section>
+        </div>
+      </article>`;
+    }
+
+    function render() {
+      const term = state.query.trim().toLowerCase();
+      const filtered = papers.filter((item) => {
+        const text = `${item.title} ${item.titleZh} ${item.journal} ${item.tier} ${item.motif} ${item.doi} ${item.standard} ${item.summaryZh} ${item.matchedTerms.join(" ")}`.toLowerCase();
+        return (state.tier === allTier || item.tier === state.tier)
+          && (state.journal === allJournal || item.journal === state.journal)
+          && (state.year === allYear || String(item.year) === state.year)
+          && (state.motif === allMotif || item.motif === state.motif)
+          && (!term || text.includes(term));
+      }).sort((a, b) => dateValue(b) - dateValue(a) || a.title.localeCompare(b.title));
+
+      els.shown.textContent = filtered.length;
+      els.list.innerHTML = filtered.length
+        ? filtered.map(renderItem).join("")
+        : `<div class="empty">没有匹配的文献。可以放宽证据等级、期刊、年份或线路模块筛选。</div>`;
+    }
+
+    fillSelect(els.tier, [allTier, "核心", "强相关", "启发"]);
+    fillSelect(els.journal, [allJournal, ...unique(papers.map((item) => item.journal)).sort()]);
+    fillSelect(els.year, [allYear, ...unique(papers.map((item) => String(item.year))).sort().reverse()]);
+    fillSelect(els.motif, [allMotif, ...unique(papers.map((item) => item.motif)).sort()]);
+    els.total.textContent = papers.length;
+
+    els.query.addEventListener("input", (event) => {
+      state.query = event.target.value;
+      render();
+    });
+    els.tier.addEventListener("change", (event) => {
+      state.tier = event.target.value;
+      render();
+    });
+    els.journal.addEventListener("change", (event) => {
+      state.journal = event.target.value;
+      render();
+    });
+    els.year.addEventListener("change", (event) => {
+      state.year = event.target.value;
+      render();
+    });
+    els.motif.addEventListener("change", (event) => {
+      state.motif = event.target.value;
+      render();
+    });
+    els.reset.addEventListener("click", () => {
+      state.tier = allTier;
+      state.journal = allJournal;
+      state.year = allYear;
+      state.motif = allMotif;
+      state.query = "";
+      els.query.value = "";
+      els.tier.value = allTier;
+      els.journal.value = allJournal;
+      els.year.value = allYear;
+      els.motif.value = allMotif;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
