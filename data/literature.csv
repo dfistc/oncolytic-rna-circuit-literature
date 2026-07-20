@@ -1,9 +1,21 @@
 pmid,year,published,journal,tier,doi,title
+42156374,2026,2026-May-19,Nature communications,待核对,10.1038/s41467-026-73487-1,An engineered viral RNA degrader on mitochondrial surface that mitigates RNA virus infection.
+42386745,2026,2026-Jul-01,Nature communications,待核对,10.1038/s41467-026-75013-9,Alphavirus M1 disrupts super-enhancer-driven oncogenic transcription via non-structural protein NSP2 in osteosarcoma.
+41996245,2026,2026-Apr-16,Cell reports,待核对,10.1016/j.celrep.2026.117263,Optineurin modulates mTORC2/AKT/STAT3 signaling to control MHC class II expression and adaptive immunity against HSV-1.
 42247513,2026,2026-06-05,Science Advances,强相关,10.1126/sciadv.aef5331,Engagement of the TCR against an oncolytic virus generates a population of effector CAR T cells with potent antitumor activity.
 42119557,2026,2026-05-21,Cell Chemical Biology,启发,10.1016/j.chembiol.2026.04.007,Programmable living therapeutics for cancer immunotherapy.
 41855345,2026,2026-03-19,Science,启发,10.1126/science.adu7686,Commensal-driven serotonin production modulates in vivo delivery of synthetic and viral vectors.
 40817284,2026,2026-03,Nature Biomedical Engineering,核心,10.1038/s41551-025-01476-8,Engineered bacteria launch and control an oncolytic virus.
 41593087,2026,2026-01-27,Nature Communications,启发,10.1038/s41467-026-68364-w,Engineered VPg saRNA achieves cap-independent low-immunogenic and precise encoding of therapeutic proteins in vivo.
+40883572,2025,2025-Sep,Nature immunology,待核对,10.1038/s41590-025-02256-x,E3 ligase RAD18 targets phosphorylated IRF3 to terminate IFNB1 transcription.
+41115934,2025,2025-Oct-20,Nature communications,待核对,10.1038/s41467-025-64301-5,RNA replicon vaccination confers long-lasting protection against H5N1 avian influenza in 23 zoo bird species.
+41134667,2025,2025-Nov-25,Cell reports,待核对,10.1016/j.celrep.2025.116462,Nuclear U1 snRNA facilitates the dimerization of hnRNPA2B1 to enhance anti-DNA viral innate immunity.
+41184450,2025,2025-Nov-03,Scientific reports,待核对,10.1038/s41598-025-22282-x,"Negative-sense RNA virus nucleocapsid as a versatile platform for gene delivery, vaccine development, and antiviral screening."
+41408047,2025,2025-Dec-17,Nature communications,待核对,10.1038/s41467-025-67547-1,Ataxin-2-like promotes translation of nonpolyadenylated reovirus mRNA.
+41372267,2025,2025-Dec-10,Scientific reports,待核对,10.1038/s41598-025-27137-z,Therapeutic efficacy of oncolytic adenovirus YSCH-01 in osteosarcoma evaluated in PDX and CDX mouse models.
+41082924,2025,2025-Dec,Nature,待核对,10.1038/s41586-025-09705-5,Host cell Z-RNAs activate ZBP1 during virus infections.
+40858872,2025,2025-Aug-26,Scientific reports,待核对,10.1038/s41598-025-16284-y,Methionine enkephalin upregulates the immune function of RAW264.7 cells to inhibit the infection of Nelson Bay orthoreoviruses.
+40802739,2025,2025-Aug-13,Science translational medicine,待核对,10.1126/scitranslmed.adx5758,An mRNA-based broad-spectrum antiviral inspired by ISG15 deficiency protects against viral infections in vitro and in vivo.
 41345806,2025,2025-12,Nature Cancer,核心,10.1038/s43018-025-01070-6,Retargeted oncolytic viruses engineered to remodel the tumor microenvironment for glioblastoma immunotherapy.
 40628717,2025,2025-07-08,Nature Communications,强相关,10.1038/s41467-025-61297-w,The PARP inhibitor talazoparib synergizes with reovirus to induce cancer killing and tumour control in vivo in mouse models.
 40411783,2025,2025-06-24,Cell Reports,强相关,10.1016/j.celrep.2025.115745,Heterologous prime-boost with an mRNA vaccine and an oncolytic virus enhances tumor regression through overcoming intratumoral immune suppression.
